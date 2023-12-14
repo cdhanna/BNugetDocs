@@ -17,7 +17,7 @@ BNuget is a tool for Unity 2021+ that integrates Nuget into Assembly Definitions
 
 # Configuration
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/kurn2-vXxEk?si=-d0FJE536zT91l95&amp;start=90" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[![Configuration Tutorial Video](https://img.youtube.com/vi/kurn2-vXxEk/0.jpg)](https://www.youtube.com/watch?v=kurn2-vXxEk&t=90)
 
 _BNuget_ uses a hierarchical file based configuration system. A configuration asset will define the behavior of _BNuget_ operations for all `.bnuget` files in the sub directories of the configuration. Each `.bnuget` file will be configured by exactly one configuration asset. If there are multiple configuration assets in a `.bnuget` file's parent path, then the closest configuration by file distance will be used. If there is no configuration file anywhere in the parent path of a `.bnuget` file, then that `.bnuget` file will use the default hardcoded configuration.
 
@@ -91,7 +91,7 @@ _BNuget_ will always show Nuget packages available from the default Package Sour
 
 # Package Sources
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/kurn2-vXxEk?si=-d0FJE536zT91l95&amp;start=297" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+[![Package Source Tutorial Video](https://img.youtube.com/vi/kurn2-vXxEk/0.jpg)](https://www.youtube.com/watch?v=kurn2-vXxEk&t=297)
 
 
 # Support
