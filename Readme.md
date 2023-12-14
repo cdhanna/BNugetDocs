@@ -227,7 +227,12 @@ Nuget packages can contain code built for a variety of target frameworks, includ
 Unfortunately, _BNuget_ does not make it obvious which Nuget packages are able to be installed. This is due to the structure and nature of the Nuget API itself. If a non _Net Standard_ package is installed, an error will be printed to the console. 
 
 **No Support for predefined Assembly Definitions**
+
 _BNuget_ does not support the ability to add global nuget packages to [predefined Assembly Definitions](https://docs.unity3d.com/Manual/ScriptCompileOrderFolders.html). You **MUST** create an Assembly Definition to add Nuget dependencies. 
+
+**No Support for Local File Package Sources**
+
+Most Nuget clients allow developers to setup Nuget Package sources pointed to a local folder containing built `.nupkg` packages. Sadly, _BNuget_ does not support this (yet?). 
 
 
 # Support
