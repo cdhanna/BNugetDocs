@@ -10,3 +10,10 @@ BNuget is a tool for Unity 2021+ that integrates Nuget into Assembly Definitions
 - [Unity Assembly Definitions](https://docs.unity3d.com/Manual/ScriptCompilationAssemblyDefinitionFiles.html)
 - [Nuget for Dotnet](https://learn.microsoft.com/en-us/nuget/what-is-nuget)
 
+
+
+# Support
+
+There is a public Discord Server available to discuss questions and comments regarding BNuget. 
+
+![Discord Link](https://discord.gg/yxFAFJurvU)
