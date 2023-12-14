@@ -2,16 +2,69 @@
 
 # BNuget
 
-[TODO: link video]
-
-BNuget is a tool for Unity 2021+ that integrates Nuget into Assembly Definitions. Only Nuget packages that support *NETStandard* are supported. This documentation assumes the reader has a basic understandingof Unity, Unity Assembly Definitions, and Nuget. To learn more about these subjects, check their documentation. 
+BNuget is a tool for Unity 2021+ that installs Nuget into Assembly Definitions. Only Nuget packages that support *NETStandard* are supported. This documentation assumes the reader has a basic understanding of Unity, Unity Assembly Definitions, and Nuget. To learn more about these subjects, check their documentation. 
 
 - [Unity Assembly Definitions](https://docs.unity3d.com/Manual/ScriptCompilationAssemblyDefinitionFiles.html)
 - [Nuget for Dotnet](https://learn.microsoft.com/en-us/nuget/what-is-nuget)
 
 
 
-# Quick Start
+# About BNuget
+
+[![Configuration Tutorial Video](https://img.youtube.com/vi/kurn2-vXxEk/0.jpg)](https://www.youtube.com/watch?v=kurn2-vXxEk&t=0)
+
+
+_BNuget_ works with Unity Assembly Definitions. An Assembly Definition is a file that logically groups a set of C# script files into one compile unit. Every C# script in a Unity project is grouped into an Assembly Definition. By default, there are a set of [predefined assemblies](https://docs.unity3d.com/Manual/ScriptCompileOrderFolders.html) that capture most C# scripts. However, if an Assembly Definition file is created, then all C# script files in the Assembly Definition's folder and sub folders are part of the Assembly Definition. When Unity compiles the C# code in a project, each Assembly Definition's C# script files are built into individual `.DLL` files and shipped with the Unity game. 
+
+Assembly Definitions may reference existing `.DLL` files that have pre-built libraries. _BNuget_ takes advantage of this capability, and extends the Assembly Definition `.DLL` referencing to include references to Nuget packaged `.DLL` files. _BNuget_ allows you to create a new file alongside an Assembly Definition, called a `.bnuget` file, that defines a list of Nuget package dependencies for the given Assembly Definition. _BNuget_ will download all of the Nuget packages, extract the required `.DLL` files, and automatically add them as references to the Assembly Definition. The process of downloading and applying the references is called a _Restore Operation_. 
+
+Each Assembly Definition may only have one `.bnuget` file, and the `.bnuget` file must be located in the same folder as the Assembly Definition, and share the same filename as the Assembly Definition. 
+
+
+## Getting Started
+
+To demonstrate how to use _BNuget_, the following steps will guide you through the installation of the [ICanHazDadJoke.NET](https://www.nuget.org/packages/ICanHazDadJoke.NET) Nuget package, which provides a free SDK to access the [DadJokes API](https://icanhazdadjoke.com/). Check the sample, `/BNuget/Samples/DadJokes`, for a complete code based example.
+
+First, you should create a new Assembly Definition. 
+1. Create a folder called `DadJokeSample`, 
+2. Inside the folder, right click the Project Window and select `Create/Assembly Definition`. Name the Assembly Definition as, `"DadJokeSample"`. 
+
+Now that you have an Assembly Definition, Unity will take any C# script files that exist in the `DadJokeSample` folder and compile them as an isolated `.DLL`. The next step is to add the Nuget package reference. 
+1. Right click on the `DadJokeSample` Assembly Definition, and click `Nuget References` on the context menu dropdown. 
+2. Select the resulting, `DadJokeSample.bnuget` file. 
+
+**NOTE**: DO NOT rename the `DadJokeSample.bnuget` file. If you do, you should also rename the Assembly Definition. However, Assembly Definition file names are not required to match the compiled `.DLL` name. If you rename either the Assembly Definition file, or its internal, `"name"` property, make sure to rename the `DadJokeSample.bnuget` file to match. 
+
+When you clicked on the `.bnuget` file, the Inspector for the asset should show a list of Packages from [nuget.org](https://nuget.org). At the top of the window, there is a search box. Select the search box and type, "DadJoke", and then press enter. The list of packages will update to reflect the search query. Find the `ICanHazDadJoke.NET` package, make sure the version dropdown is set to 1.0.13 (or greater), and click "Install". It may take a moment, but Unity will recompile. _BNuget_ is running a _Restore Operation_, which is a term that comes from the Nuget community. The `ICanHazDadJoke.NET` package is being downloaded, its own internal dependencies downloaded, and all subsequent `.DLL` files associated with the `DadJokeSample` Assembly Definition. 
+
+After Unity has recompiled, the Inspector should show the `ICanHazDadJoke.NET` under the Installed Packages section. Additionally, there is an Implicit Packages section that should contain the `Newtonsoft.JSON` package. The `ICanHazDadJoke.NET` packages has an internal dependency on `Newtonsoft.JSON`, so it has been included implicitly. To confirm that the Restore operation completed successfully, check the following,
+1. Select the `DadJokeSample` Assembly Definition, and check that the `Override References` checkbox is set to true. Additionally, there should be two entries under the `Assembly References` list; one for the `ICanHazDadJoke.NET` package, and a second for the `Newtonsoft.JSON` package. 
+2. Observe that there is a new folder, `Assets/BNugetDlls` in your project. The folder should contain 4 files. There will be 2 `.DLL` files, and 2 `.nuspec` files. 
+
+The `ICanHazDadJoke.NET` package is now available to be used inside the `DadJokeSample` assembly. Create a new script file, and paste the code below.
+
+```csharp
+using ICanHazDadJoke.NET;
+using UnityEditor;
+using UnityEngine;
+
+public class Example
+{
+    [MenuItem("BNuget Example/Get Dad Joke")]
+    public static async void PrintDadJoke()
+    {
+        Debug.Log("Getting joke");
+        var libraryName = "ICanHazDadJoke.NET Readme";
+        var contactUri = "https://github.com/mattleibow/ICanHazDadJoke.NET";
+        var client = new DadJokeClient(libraryName, contactUri);
+        var joke = await client.GetRandomJokeAsync();
+        Debug.Log(joke.Joke);
+    }
+}
+```
+
+Now, back in Unity, you can use the `BNuget Example/Get Dad Joke` menu item at the top of the screen to test the code. 
+_BNuget_ has installed the Nuget dependency, and it is available to use in C# scripts.
 
 
 
@@ -19,7 +72,7 @@ BNuget is a tool for Unity 2021+ that integrates Nuget into Assembly Definitions
 
 [![Configuration Tutorial Video](https://img.youtube.com/vi/kurn2-vXxEk/0.jpg)](https://www.youtube.com/watch?v=kurn2-vXxEk&t=90)
 
-In addition to the video above, watch the [video about configuration contexts](https://www.youtube.com/watch?v=kurn2-vXxEk&t=297) as well.
+In addition to the above video, watch the [video about configuration contexts](https://www.youtube.com/watch?v=kurn2-vXxEk&t=297) as well.
 
 _BNuget_ uses a hierarchical file based configuration system. A configuration asset will define the behavior of _BNuget_ operations for all `.bnuget` files in the sub directories of the configuration. Each `.bnuget` file will be configured by exactly one configuration asset. If there are multiple configuration assets in a `.bnuget` file's parent path, then the closest configuration by file distance will be used. If there is no configuration file anywhere in the parent path of a `.bnuget` file, then that `.bnuget` file will use the default hardcoded configuration.
 
@@ -101,7 +154,7 @@ If multiple configuration files share the same cache path, then the configuratio
 
 ### Custom Sources
 
-_BNuget_ will always show Nuget packages available from the default Package Source, [nuget.org](nuget.org). However, additional Package Sources can be added to a configuration file. The inclusion of a Package Source will allow every associated `.bnuget` file to browse and install packages from the new Package Source. The [Package Sources](#package-sources) section has more detail.
+_BNuget_ will always show Nuget packages available from the default Package Source, [nuget.org](https://nuget.org). However, additional Package Sources can be added to a configuration file. The inclusion of a Package Source will allow every associated `.bnuget` file to browse and install packages from the new Package Source. The [Package Sources](#package-sources) section has more detail.
 
 
 
@@ -109,7 +162,7 @@ _BNuget_ will always show Nuget packages available from the default Package Sour
 
 [![Package Source Tutorial Video](https://img.youtube.com/vi/kurn2-vXxEk/0.jpg)](https://www.youtube.com/watch?v=kurn2-vXxEk&t=190)
 
-Nuget packages can come from a variety of locations. Many packages are located on [nuget.org](nuget.org), which is a public repository of (mostly) free packages for the Dotnet environment. However, _BNuget_ can be configured to use packages from additional locations. The Nuget API defines the schema for a Nuget Package Source, and _BNuget_ supports the v3 Nuget API specification. 
+Nuget packages can come from a variety of locations. Many packages are located on [nuget.org](https://nuget.org), which is a public repository of (mostly) free packages for the Dotnet environment. However, _BNuget_ can be configured to use packages from additional locations. The Nuget API defines the schema for a Nuget Package Source, and _BNuget_ supports the v3 Nuget API specification. 
 
 _BNuget_ has only been tested and verified with [Github's Nuget Package Source](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-nuget-registry). However, _BNuget_ should be able to support many other custom Package Sources, such as [Artifactory](https://jfrog.com/help/r/jfrog-artifactory-documentation/nuget-repositories), [Nexus](https://help.sonatype.com/repomanager3/nexus-repository-administration/formats/nuget-repositories/nuget-hosted-repositories), and [ProGet](https://inedo.com/proget/private-nuget-server). 
 
@@ -159,6 +212,23 @@ _Basic Auth_ is a common form of web authentication that require a Username and 
 #### Bearer Token Auth
 
 _Bearer Tokens_ are a second common form of web authentication, and they only require a single token string. The token is sent inside the `Authentication` header to every API request directed to the custom Nuget Package Source.
+
+
+# Limitations
+
+[![Limitations Tutorial Video](https://img.youtube.com/vi/kurn2-vXxEk/0.jpg)](https://youtu.be/kurn2-vXxEk?si=br2MbB4bk9zMxyW4&t=416)
+
+There are a few known limitations regarding _BNuget_. 
+
+**Net Standard Only**
+
+Nuget packages can contain code built for a variety of target frameworks, including the now outdated _Dotnet Framework_, the more modern _.NET 8_, or _Net Standard_. _BNuget_ only supports the installation of packages that support _Net Standard_. Unity itself does not support _.NET 8_. Even though Unity does support _Dotnet Framework_, _BNuget_ does not. 
+
+Unfortunately, _BNuget_ does not make it obvious which Nuget packages are able to be installed. This is due to the structure and nature of the Nuget API itself. If a non _Net Standard_ package is installed, an error will be printed to the console. 
+
+**No Support for predefined Assembly Definitions**
+_BNuget_ does not support the ability to add global nuget packages to [predefined Assembly Definitions](https://docs.unity3d.com/Manual/ScriptCompileOrderFolders.html). You **MUST** create an Assembly Definition to add Nuget dependencies. 
+
 
 # Support
 
