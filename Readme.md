@@ -17,7 +17,7 @@ BNuget is a tool for Unity 2021+ that integrates Nuget into Assembly Definitions
 
 # Configuration
 
-![Configuration Tutorial Video](https://youtu.be/kurn2-vXxEk?si=cvEgFHhdX_TNLrRZ&t=90)
+[![Configuration Tutorial Video](https://img.youtube.com/vi/kurn2-vXxEk/0.jpg)](https://www.youtube.com/watch?v=kurn2-vXxEk&t=90)
 
 _BNuget_ uses a hierarchical file based configuration system. A configuration asset will define the behavior of _BNuget_ operations for all `.bnuget` files in the sub directories of the configuration. Each `.bnuget` file will be configured by exactly one configuration asset. If there are multiple configuration assets in a `.bnuget` file's parent path, then the closest configuration by file distance will be used. If there is no configuration file anywhere in the parent path of a `.bnuget` file, then that `.bnuget` file will use the default hardcoded configuration.
 
@@ -87,11 +87,11 @@ If multiple configuration files share the same cache path, then the configuratio
 
 ### Custom Sources
 
-_BNuget_ will always show Nuget packages available from the default Package Source, [nuget.org](nuget.org). However, additional Package Sources can be added to a configuration file. The inclusion of a Package Source will allow every associated `.bnuget` file to browse and install packages from the new Package Source. The [Package Sources](#Package_Sources) section has more detail.
+_BNuget_ will always show Nuget packages available from the default Package Source, [nuget.org](nuget.org). However, additional Package Sources can be added to a configuration file. The inclusion of a Package Source will allow every associated `.bnuget` file to browse and install packages from the new Package Source. The [Package Sources](#package-sources) section has more detail.
 
 # Package Sources
 
-![Package Source Tutorial Video](https://youtu.be/kurn2-vXxEk?si=-d0FJE536zT91l95&t=297)
+[![Package Source Tutorial Video](https://img.youtube.com/vi/kurn2-vXxEk/0.jpg)](https://www.youtube.com/watch?v=kurn2-vXxEk&t=297)
 
 
 # Support
