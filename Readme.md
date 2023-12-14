@@ -1,4 +1,4 @@
-![BNugetLogo](https://github.com/cdhanna92/BNugetDocs/blob/main/bnugetHeader?raw=true)
+![BNugetLogo](https://github.com/cdhanna/BNugetDocs/blob/main/bnugetHeader?raw=true)
 
 
 # Getting Started with BNuget
