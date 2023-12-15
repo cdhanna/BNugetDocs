@@ -11,7 +11,7 @@ BNuget is a tool for Unity 2021+ that installs Nuget packages into Assembly Defi
 
 # About BNuget
 
-[![Configuration Tutorial Video](https://img.youtube.com/vi/kurn2-vXxEk/0.jpg)](https://www.youtube.com/watch?v=kurn2-vXxEk&t=0)
+[![About BNuget Tutorial Video](https://github.com/cdhanna/BNugetDocs/blob/main/media/bnuget_thumbnail_github1.png?raw=true)](https://www.youtube.com/watch?v=YkFo9-x0aFI&list=PLJpZGN1JUQykEYI5rxTuJsWF6qkZ8shR9&index=1)
 
 
 _BNuget_ works with Unity Assembly Definitions. An Assembly Definition is a file that logically groups a set of C# script files into one compile unit. Every C# script in a Unity project is grouped into an Assembly Definition. By default, there are a set of [predefined assemblies](https://docs.unity3d.com/Manual/ScriptCompileOrderFolders.html) that capture most C# scripts. However, if an Assembly Definition file is created, then all C# script files in the Assembly Definition's folder and sub folders are part of the Assembly Definition. When Unity compiles the C# code in a project, each Assembly Definition's C# script files are built into individual `.DLL` files and shipped with the Unity game. 
@@ -70,9 +70,9 @@ _BNuget_ has installed the Nuget dependency, and it is available to use in C# sc
 
 # Configuration
 
-[![Configuration Tutorial Video](https://img.youtube.com/vi/kurn2-vXxEk/0.jpg)](https://www.youtube.com/watch?v=kurn2-vXxEk&t=90)
+[![Configuration Tutorial Video](https://github.com/cdhanna/BNugetDocs/blob/main/media/bnuget_thumbnail_github2.png?raw=true)](https://www.youtube.com/watch?v=YkFo9-x0aFI&list=PLJpZGN1JUQykEYI5rxTuJsWF6qkZ8shR9&index=2)
 
-In addition to the above video, watch the [video about configuration contexts](https://www.youtube.com/watch?v=kurn2-vXxEk&t=297) as well.
+In addition to the above video, watch the [video about configuration contexts](https://www.youtube.com/watch?v=YkFo9-x0aFI&list=PLJpZGN1JUQykEYI5rxTuJsWF6qkZ8shR9&index=4) as well.
 
 _BNuget_ uses a hierarchical file based configuration system. A configuration asset will define the behavior of _BNuget_ operations for all `.bnuget` files in the sub directories of the configuration. Each `.bnuget` file will be configured by exactly one configuration asset. If there are multiple configuration assets in a `.bnuget` file's parent path, then the closest configuration by file distance will be used. If there is no configuration file anywhere in the parent path of a `.bnuget` file, then that `.bnuget` file will use the default hardcoded configuration.
 
@@ -160,7 +160,7 @@ _BNuget_ will always show Nuget packages available from the default Package Sour
 
 # Package Sources
 
-[![Package Source Tutorial Video](https://img.youtube.com/vi/kurn2-vXxEk/0.jpg)](https://www.youtube.com/watch?v=kurn2-vXxEk&t=190)
+[![Package Source Tutorial Video](https://github.com/cdhanna/BNugetDocs/blob/main/media/bnuget_thumbnail_github3.png?raw=true)](https://www.youtube.com/watch?v=YkFo9-x0aFI&list=PLJpZGN1JUQykEYI5rxTuJsWF6qkZ8shR9&index=3)
 
 Nuget packages can come from a variety of locations. Many packages are located on [nuget.org](https://nuget.org), which is a public repository of (mostly) free packages for the Dotnet environment. However, _BNuget_ can be configured to use packages from additional locations. The Nuget API defines the schema for a Nuget Package Source, and _BNuget_ supports the v3 Nuget API specification. 
 
@@ -216,7 +216,7 @@ _Bearer Tokens_ are a second common form of web authentication, and they only re
 
 # Limitations
 
-[![Limitations Tutorial Video](https://img.youtube.com/vi/kurn2-vXxEk/0.jpg)](https://youtu.be/kurn2-vXxEk?si=br2MbB4bk9zMxyW4&t=416)
+[![Limitations Tutorial Video](https://github.com/cdhanna/BNugetDocs/blob/main/media/bnuget_thumbnail_github5.png?raw=true)](https://www.youtube.com/watch?v=YkFo9-x0aFI&list=PLJpZGN1JUQykEYI5rxTuJsWF6qkZ8shR9&index=5)
 
 There are a few known limitations regarding _BNuget_. 
 
