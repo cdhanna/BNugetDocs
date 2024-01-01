@@ -157,7 +157,6 @@ If multiple configuration files share the same cache path, then the configuratio
 _BNuget_ will always show Nuget packages available from the default Package Source, [nuget.org](https://nuget.org). However, additional Package Sources can be added to a configuration file. The inclusion of a Package Source will allow every associated `.bnuget` file to browse and install packages from the new Package Source. The [Package Sources](#package-sources) section has more detail.
 
 
-
 # Package Sources
 
 [![Package Source Tutorial Video](https://github.com/cdhanna/BNugetDocs/blob/main/media/bnuget_thumbnail_github3.png?raw=true)](https://www.youtube.com/watch?v=UEEmxP_g8LU&list=PLJpZGN1JUQykEYI5rxTuJsWF6qkZ8shR9&index=3)
@@ -214,6 +213,42 @@ _Basic Auth_ is a common form of web authentication that require a Username and 
 _Bearer Tokens_ are a second common form of web authentication, and they only require a single token string. The token is sent inside the `Authentication` header to every API request directed to the custom Nuget Package Source.
 
 
+# Custom Package Downloads
+
+_BNuget_ is not a complete Nuget client. A Nuget package contains a lot of individual files, but _BNuget_ only 
+tries to extract the built managed `.dll` file for the correct target platform for Unity. That means _BNuget_
+does nothing with many of the files in a Nuget package. For _most_ cases, this works fine, because the managed
+`.dll` file contains all of the built code. 
+
+However, there are edge cases where a Nuget package contains additional information that is required for the package
+to work correctly. In this case, it is possible to completely override how the files are extracted from a Nuget package.
+
+All overrides are handled per configuration file, so you must create a custom configuration file. However, the
+code that controls the download is a virtual method on the configuration itself, so you need to create a sub class
+of the configuration. Make a subclass of the `BNugetConfigFile` class, and then create a Scriptable Object instance of that class. Now, override the `HandleDownload` method. 
+
+The `HandleDownload` method is called every time a package is being downloaded. When you override this method,
+you inherit complete responsibility for how EVERY package is downloaded into the project. 
+
+I advise you to use a switch statement to check for the edge case package ids, but leave the default case untouched, like in the example below.
+
+```csharp
+public override Task<NupkgDownloadHandlerData> HandleDownload(NupkgPackageDownloadArgs args)
+{
+    switch (args.package)
+    {
+        case "llamasharp.backend.cpu":
+            // only in the llamasharp.backend.cpu case, we have a custom download function
+            return HandleLlamaBackend(args);
+        default:
+            
+            // in all other cases, use the basic managed dll extraction default case.
+            return base.HandleDownload(args);
+    }
+}
+```
+
+
 # Limitations
 
 [![Limitations Tutorial Video](https://github.com/cdhanna/BNugetDocs/blob/main/media/bnuget_thumbnail_github5.png?raw=true)](https://www.youtube.com/watch?v=81mqE3MkrOY&list=PLJpZGN1JUQykEYI5rxTuJsWF6qkZ8shR9&index=5)
@@ -241,12 +276,3 @@ There is a public Discord Server available to discuss questions and comments reg
 
 [Discord](https://discord.gg/yxFAFJurvU)
 
-
-
-
-
-part1 - installing, browsing, using code
-part2 - config, dll path, dll folder, cache
-part3 - custom package sources
-part4 - config context
-part5 - limitations, debugging
